@@ -1,0 +1,17 @@
+{
+    "contents" : "makeCacheMatrix <- function(x = matrix()) {\n  ## @x: a square invertible matrix\n  ## return: a list containing functions to\n  ##              1. set the matrix\n  ##              2. get the matrix\n  ##              3. set the inverse\n  ##              4. get the inverse\n  ##         this list is used as the input to cacheSolve()\n  \n  inv = NULL\n  set = function(y) {\n    # use `<<-` to assign a value to an object in an environment \n    # different from the current environment. \n    x <<- y\n    inv <<- NULL\n  }\n  get = function() x\n  setinv = function(inverse) inv <<- inverse \n  getinv = function() inv\n  list(set=set, get=get, setinv=setinv, getinv=getinv)\n}\n\ncacheSolve <- function(x, ...) {\n  ## @x: output of makeCacheMatrix()\n  ## return: inverse of the original matrix input to makeCacheMatrix()\n  \n  inv = x$getinv()\n  \n  # if the inverse has already been calculated\n  if (!is.null(inv)){\n    # get it from the cache and skips the computation. \n    message(\"getting cached data\")\n    return(inv)\n  }\n  \n  # otherwise, calculates the inverse \n  mat.data = x$get()\n  inv = solve(mat.data, ...)\n  \n  # sets the value of the inverse in the cache via the setinv function.\n  x$setinv(inv)\n  \n  return(inv)\n}",
+    "created" : 1429869000497.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2336700589",
+    "id" : "438FF396",
+    "lastKnownWriteTime" : 1429884323,
+    "path" : "E:/repo/r-prog_W2b/invmat.R",
+    "project_path" : "invmat.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}
